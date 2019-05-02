@@ -21,9 +21,7 @@ namespace noticiasAuto.Models
         public string Email { get; set; }
 
         public virtual ICollection<Comentarios> ListaDeComentarios { get; set; }
-
-
-
+        
 
     }
 }
