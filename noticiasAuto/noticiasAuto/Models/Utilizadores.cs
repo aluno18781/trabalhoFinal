@@ -6,9 +6,9 @@ using System.Web;
 
 namespace noticiasAuto.Models
 {
-    public class Utilizadores
+    public class utilizadores
     {
-        public Utilizadores()
+        public utilizadores()
         {
             ListaDeComentarios = new HashSet<Comentarios>();
         }
@@ -16,14 +16,12 @@ namespace noticiasAuto.Models
         [Key]
         public int IdUser { get; set; }
 
-        public string None { get; set; }
+        public string Nome { get; set; }
 
         public string Email { get; set; }
 
         public virtual ICollection<Comentarios> ListaDeComentarios { get; set; }
-
-
-
+        
 
     }
 }

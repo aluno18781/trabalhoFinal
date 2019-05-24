@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NoticiasDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comentarios">
+          <Key>
+            <PropertyRef Name="IdComentario" />
+          </Key>
+          <Property Name="IdComentario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Conteudo" Type="nvarchar(max)" />
+          <Property Name="NoticiaFK" Type="int" Nullable="false" />
+          <Property Name="UserFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipas">
+          <Key>
+            <PropertyRef Name="IdEquipa" />
+          </Key>
+          <Property Name="IdEquipa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" />
+          <Property Name="DataFundacao" Type="datetime" Nullable="false" />
+          <Property Name="Logo" Type="nvarchar(max)" />
+          <Property Name="Presidente" Type="nvarchar(max)" />
+          <Property Name="Nacionalidade" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="EquipasNoticias">
+          <Key>
+            <PropertyRef Name="Equipas_IdEquipa" />
+            <PropertyRef Name="Noticias_IdNoticia" />
+          </Key>
+          <Property Name="Equipas_IdEquipa" Type="int" Nullable="false" />
+          <Property Name="Noticias_IdNoticia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Noticias">
+          <Key>
+            <PropertyRef Name="IdNoticia" />
+          </Key>
+          <Property Name="IdNoticia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fotografia" Type="nvarchar(max)" />
+          <Property Name="Titulo" Type="nvarchar(max)" />
+          <Property Name="Conteudo" Type="nvarchar(max)" />
+          <Property Name="UserFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pilotos">
+          <Key>
+            <PropertyRef Name="IdPiloto" />
+          </Key>
+          <Property Name="IdPiloto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" />
+          <Property Name="DataNascimento" Type="datetime" Nullable="false" />
+          <Property Name="Nacionalidade" Type="nvarchar(max)" />
+          <Property Name="Fotografia" Type="nvarchar(max)" />
+          <Property Name="EquipaFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilizadores">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="None" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Comentarios_dbo_Noticias_NoticiaFK">
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Noticias">
+              <PropertyRef Name="IdNoticia" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="NoticiaFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comentarios_dbo_Utilizadores_UserFK">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EquipasNoticias_dbo_Equipas_Equipas_IdEquipa">
+          <End Role="Equipas" Type="Self.Equipas" Multiplicity="1" />
+          <End Role="EquipasNoticias" Type="Self.EquipasNoticias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipas">
+              <PropertyRef Name="IdEquipa" />
+            </Principal>
+            <Dependent Role="EquipasNoticias">
+              <PropertyRef Name="Equipas_IdEquipa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EquipasNoticias_dbo_Noticias_Noticias_IdNoticia">
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="1" />
+          <End Role="EquipasNoticias" Type="Self.EquipasNoticias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Noticias">
+              <PropertyRef Name="IdNoticia" />
+            </Principal>
+            <Dependent Role="EquipasNoticias">
+              <PropertyRef Name="Noticias_IdNoticia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Noticias_dbo_Utilizadores_UserFK">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Noticias">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pilotos_dbo_Equipas_EquipaFK">
+          <End Role="Equipas" Type="Self.Equipas" Multiplicity="1" />
+          <End Role="Pilotos" Type="Self.Pilotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipas">
+              <PropertyRef Name="IdEquipa" />
+            </Principal>
+            <Dependent Role="Pilotos">
+              <PropertyRef Name="EquipaFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NoticiasDBModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comentarios" EntityType="Self.Comentarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipas" EntityType="Self.Equipas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipasNoticias" EntityType="Self.EquipasNoticias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Noticias" EntityType="Self.Noticias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pilotos" EntityType="Self.Pilotos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Comentarios_dbo_Noticias_NoticiaFK" Association="Self.FK_dbo_Comentarios_dbo_Noticias_NoticiaFK">
+            <End Role="Noticias" EntitySet="Noticias" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comentarios_dbo_Utilizadores_UserFK" Association="Self.FK_dbo_Comentarios_dbo_Utilizadores_UserFK">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EquipasNoticias_dbo_Equipas_Equipas_IdEquipa" Association="Self.FK_dbo_EquipasNoticias_dbo_Equipas_Equipas_IdEquipa">
+            <End Role="Equipas" EntitySet="Equipas" />
+            <End Role="EquipasNoticias" EntitySet="EquipasNoticias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EquipasNoticias_dbo_Noticias_Noticias_IdNoticia" Association="Self.FK_dbo_EquipasNoticias_dbo_Noticias_Noticias_IdNoticia">
+            <End Role="Noticias" EntitySet="Noticias" />
+            <End Role="EquipasNoticias" EntitySet="EquipasNoticias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Noticias_dbo_Utilizadores_UserFK" Association="Self.FK_dbo_Noticias_dbo_Utilizadores_UserFK">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Noticias" EntitySet="Noticias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pilotos_dbo_Equipas_EquipaFK" Association="Self.FK_dbo_Pilotos_dbo_Equipas_EquipaFK">
+            <End Role="Equipas" EntitySet="Equipas" />
+            <End Role="Pilotos" EntitySet="Pilotos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NoticiasDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comentarios">
+          <Key>
+            <PropertyRef Name="IdComentario" />
+          </Key>
+          <Property Name="IdComentario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Conteudo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NoticiaFK" Type="Int32" Nullable="false" />
+          <Property Name="UserFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Noticias" Relationship="Self.FK_dbo_Comentarios_dbo_Noticias_NoticiaFK" FromRole="Comentarios" ToRole="Noticias" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FK_dbo_Comentarios_dbo_Utilizadores_UserFK" FromRole="Comentarios" ToRole="Utilizadores" />
+        </EntityType>
+        <EntityType Name="Equipas">
+          <Key>
+            <PropertyRef Name="IdEquipa" />
+          </Key>
+          <Property Name="IdEquipa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DataFundacao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Presidente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nacionalidade" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pilotos" Relationship="Self.FK_dbo_Pilotos_dbo_Equipas_EquipaFK" FromRole="Equipas" ToRole="Pilotos" />
+          <NavigationProperty Name="Noticias" Relationship="Self.EquipasNoticias" FromRole="Equipas" ToRole="Noticias" />
+        </EntityType>
+        <EntityType Name="Noticias">
+          <Key>
+            <PropertyRef Name="IdNoticia" />
+          </Key>
+          <Property Name="IdNoticia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fotografia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Titulo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Conteudo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comentarios" Relationship="Self.FK_dbo_Comentarios_dbo_Noticias_NoticiaFK" FromRole="Noticias" ToRole="Comentarios" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FK_dbo_Noticias_dbo_Utilizadores_UserFK" FromRole="Noticias" ToRole="Utilizadores" />
+          <NavigationProperty Name="Equipas" Relationship="Self.EquipasNoticias" FromRole="Noticias" ToRole="Equipas" />
+        </EntityType>
+        <EntityType Name="Pilotos">
+          <Key>
+            <PropertyRef Name="IdPiloto" />
+          </Key>
+          <Property Name="IdPiloto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nacionalidade" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Fotografia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EquipaFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Equipas" Relationship="Self.FK_dbo_Pilotos_dbo_Equipas_EquipaFK" FromRole="Pilotos" ToRole="Equipas" />
+        </EntityType>
+        <EntityType Name="Utilizadores">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="None" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comentarios" Relationship="Self.FK_dbo_Comentarios_dbo_Utilizadores_UserFK" FromRole="Utilizadores" ToRole="Comentarios" />
+          <NavigationProperty Name="Noticias" Relationship="Self.FK_dbo_Noticias_dbo_Utilizadores_UserFK" FromRole="Utilizadores" ToRole="Noticias" />
+        </EntityType>
+        <Association Name="FK_dbo_Comentarios_dbo_Noticias_NoticiaFK">
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Noticias">
+              <PropertyRef Name="IdNoticia" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="NoticiaFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comentarios_dbo_Utilizadores_UserFK">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pilotos_dbo_Equipas_EquipaFK">
+          <End Role="Equipas" Type="Self.Equipas" Multiplicity="1" />
+          <End Role="Pilotos" Type="Self.Pilotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipas">
+              <PropertyRef Name="IdEquipa" />
+            </Principal>
+            <Dependent Role="Pilotos">
+              <PropertyRef Name="EquipaFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Noticias_dbo_Utilizadores_UserFK">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Noticias">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EquipasNoticias">
+          <End Role="Equipas" Type="Self.Equipas" Multiplicity="*" />
+          <End Role="Noticias" Type="Self.Noticias" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="NoticiasDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Comentarios" EntityType="Self.Comentarios" />
+          <EntitySet Name="Equipas" EntityType="Self.Equipas" />
+          <EntitySet Name="Noticias" EntityType="Self.Noticias" />
+          <EntitySet Name="Pilotos" EntityType="Self.Pilotos" />
+          <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" />
+          <AssociationSet Name="FK_dbo_Comentarios_dbo_Noticias_NoticiaFK" Association="Self.FK_dbo_Comentarios_dbo_Noticias_NoticiaFK">
+            <End Role="Noticias" EntitySet="Noticias" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comentarios_dbo_Utilizadores_UserFK" Association="Self.FK_dbo_Comentarios_dbo_Utilizadores_UserFK">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pilotos_dbo_Equipas_EquipaFK" Association="Self.FK_dbo_Pilotos_dbo_Equipas_EquipaFK">
+            <End Role="Equipas" EntitySet="Equipas" />
+            <End Role="Pilotos" EntitySet="Pilotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Noticias_dbo_Utilizadores_UserFK" Association="Self.FK_dbo_Noticias_dbo_Utilizadores_UserFK">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Noticias" EntitySet="Noticias" />
+          </AssociationSet>
+          <AssociationSet Name="EquipasNoticias" Association="Self.EquipasNoticias">
+            <End Role="Equipas" EntitySet="Equipas" />
+            <End Role="Noticias" EntitySet="Noticias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NoticiasDBModelStoreContainer" CdmEntityContainer="NoticiasDBEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="NoticiasDBModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comentarios">
+            <EntityTypeMapping TypeName="NoticiasDBModel.Comentarios">
+              <MappingFragment StoreEntitySet="Comentarios">
+                <ScalarProperty Name="IdComentario" ColumnName="IdComentario" />
+                <ScalarProperty Name="Conteudo" ColumnName="Conteudo" />
+                <ScalarProperty Name="NoticiaFK" ColumnName="NoticiaFK" />
+                <ScalarProperty Name="UserFK" ColumnName="UserFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipas">
+            <EntityTypeMapping TypeName="NoticiasDBModel.Equipas">
+              <MappingFragment StoreEntitySet="Equipas">
+                <ScalarProperty Name="IdEquipa" ColumnName="IdEquipa" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="DataFundacao" ColumnName="DataFundacao" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Presidente" ColumnName="Presidente" />
+                <ScalarProperty Name="Nacionalidade" ColumnName="Nacionalidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Noticias">
+            <EntityTypeMapping TypeName="NoticiasDBModel.Noticias">
+              <MappingFragment StoreEntitySet="Noticias">
+                <ScalarProperty Name="IdNoticia" ColumnName="IdNoticia" />
+                <ScalarProperty Name="Fotografia" ColumnName="Fotografia" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Conteudo" ColumnName="Conteudo" />
+                <ScalarProperty Name="UserFK" ColumnName="UserFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pilotos">
+            <EntityTypeMapping TypeName="NoticiasDBModel.Pilotos">
+              <MappingFragment StoreEntitySet="Pilotos">
+                <ScalarProperty Name="IdPiloto" ColumnName="IdPiloto" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Nacionalidade" ColumnName="Nacionalidade" />
+                <ScalarProperty Name="Fotografia" ColumnName="Fotografia" />
+                <ScalarProperty Name="EquipaFK" ColumnName="EquipaFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilizadores">
+            <EntityTypeMapping TypeName="NoticiasDBModel.Utilizadores">
+              <MappingFragment StoreEntitySet="Utilizadores">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="None" ColumnName="None" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EquipasNoticias" TypeName="NoticiasDBModel.EquipasNoticias" StoreEntitySet="EquipasNoticias">
+            <EndProperty Name="Equipas">
+              <ScalarProperty Name="IdEquipa" ColumnName="Equipas_IdEquipa" />
+            </EndProperty>
+            <EndProperty Name="Noticias">
+              <ScalarProperty Name="IdNoticia" ColumnName="Noticias_IdNoticia" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

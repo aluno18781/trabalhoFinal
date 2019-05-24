@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="076924211c95440db7f55c869797e14f" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="NoticiasDBModel.C__MigrationHistory" Width="1.5" PointX="11.375" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoticiasDBModel.Comentarios" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoticiasDBModel.Equipas" Width="1.5" PointX="0.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoticiasDBModel.Noticias" Width="1.5" PointX="3.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoticiasDBModel.Pilotos" Width="1.5" PointX="0.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoticiasDBModel.Utilizadores" Width="1.5" PointX="3.125" PointY="6.125" IsExpanded="true" />
+        <AssociationConnector Association="NoticiasDBModel.FK_dbo_Comentarios_dbo_Noticias_NoticiaFK" ManuallyRouted="false" />
+        <AssociationConnector Association="NoticiasDBModel.FK_dbo_Comentarios_dbo_Utilizadores_UserFK" ManuallyRouted="false" />
+        <AssociationConnector Association="NoticiasDBModel.FK_dbo_Pilotos_dbo_Equipas_EquipaFK" ManuallyRouted="false" />
+        <AssociationConnector Association="NoticiasDBModel.FK_dbo_Noticias_dbo_Utilizadores_UserFK" ManuallyRouted="false" />
+        <AssociationConnector Association="NoticiasDBModel.EquipasNoticias" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

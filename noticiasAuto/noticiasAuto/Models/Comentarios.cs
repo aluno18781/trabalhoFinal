@@ -20,7 +20,7 @@ namespace noticiasAuto.Models
 
         [ForeignKey("Utilizador")]
         public int UserFK { get; set; }
-        public virtual Utilizadores Utilizador { get; set; }
+        public virtual utilizadores Utilizador { get; set; }
 
 
 
