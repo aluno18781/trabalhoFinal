@@ -1,0 +1,60 @@
+﻿@model IEnumerable<noticiasAuto.Models.Equipas>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataFundacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fundador)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nacionalidade)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+            @Html.ActionLink(item.Nome, "Details", new { id = item.IdEquipa })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataFundacao)
+        </td>
+        <td>
+            <a href="~/imagens/@item.Logo" target="_blank">
+                <img src="~/imagens/@item.Logo" width="150" height="75" />
+            </a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fundador)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nacionalidade)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdEquipa }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdEquipa }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdEquipa })
+        </td>
+    </tr>
+}
+
+</table>

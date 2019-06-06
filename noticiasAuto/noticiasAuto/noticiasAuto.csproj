@@ -105,6 +105,29 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Imagens\Araujo.jpg" />
+    <Content Include="Imagens\araujoNotica.jpg" />
+    <Content Include="Imagens\audi.jpg" />
+    <Content Include="Imagens\Burns.jpg" />
+    <Content Include="Imagens\burnsNoticia.jpg" />
+    <Content Include="Imagens\Citroën.jpg" />
+    <Content Include="Imagens\ferrari.jpg" />
+    <Content Include="Imagens\fiat.jfif" />
+    <Content Include="Imagens\ford.jpg" />
+    <Content Include="Imagens\Loeb.jpg" />
+    <Content Include="Imagens\Marku.jpg" />
+    <Content Include="Imagens\MarkuNoticia.jpg" />
+    <Content Include="Imagens\mercedes.jpg" />
+    <Content Include="Imagens\Mitsubishi.jpg" />
+    <Content Include="Imagens\schumacher.jpg" />
+    <Content Include="Imagens\SCHUMACHERNoticia.jpg" />
+    <Content Include="Imagens\SebastanNoticia.jpg" />
+    <Content Include="Imagens\SebastianVettel.jpg" />
+    <Content Include="Imagens\Stig.jpg" />
+    <Content Include="Imagens\StigBlomqvistNoticia.jpg" />
+    <Content Include="Imagens\Subaru.jpg" />
+    <Content Include="Imagens\ValtteriBottas.jpg" />
+    <Content Include="Imagens\walter.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -119,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EquipasController.cs" />
+    <Compile Include="Controllers\NoticiasController.cs" />
     <Compile Include="Controllers\PilotosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,6 +168,16 @@
     <Content Include="Views\Pilotos\Edit.cshtml" />
     <Content Include="Views\Pilotos\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Equipas\Create.cshtml" />
+    <Content Include="Views\Equipas\Delete.cshtml" />
+    <Content Include="Views\Equipas\Details.cshtml" />
+    <Content Include="Views\Equipas\Edit.cshtml" />
+    <Content Include="Views\Equipas\Index.cshtml" />
+    <Content Include="Views\Noticias\Create.cshtml" />
+    <Content Include="Views\Noticias\Delete.cshtml" />
+    <Content Include="Views\Noticias\Details.cshtml" />
+    <Content Include="Views\Noticias\Edit.cshtml" />
+    <Content Include="Views\Noticias\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

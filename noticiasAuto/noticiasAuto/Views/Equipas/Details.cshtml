@@ -1,0 +1,71 @@
+﻿@model noticiasAuto.Models.Equipas
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFundacao)
+        </dt>
+
+        <dd>
+            @Convert.ToDateTime(Model.DataFundacao).ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Logo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fundador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fundador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nacionalidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nacionalidade)
+        </dd>
+
+    </dl>
+</div>
+<div style="clear: left">
+    @foreach (var pilotos in Model.ListaDePilotos)
+    {
+        <div class="col-lg-4" style=" text-align: center; padding-bottom:30px;">
+            <div>@pilotos.Nome</div>
+            <a href="@Url.Action("Details","Pilotos", new { id=pilotos.IdPiloto } )">
+                <img src="~/imagens/@pilotos.Fotografia" height="120" width="190" />
+            </a>
+        </div>
+
+    }
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdEquipa }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

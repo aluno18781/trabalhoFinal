@@ -5,8 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
-namespace noticiasAuto.Models
-{
+namespace noticiasAuto.Models { 
     public class NoticiasDB : DbContext
     {
         public NoticiasDB() : base("NoticiasDBConnectionString") { }

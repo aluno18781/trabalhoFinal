@@ -24,14 +24,14 @@ namespace noticiasAuto.Migrations
 
 
             var equipas = new List<Equipas> {
-                new Equipas { IdEquipa = 1, Nome = "Fiat", DataFundacao = new DateTime(1989, 06, 1), Logo = "fiat.jpg", Fundador = "Giovanni Agnelli", Nacionalidade = "Turim, Itália", },
+                new Equipas { IdEquipa = 1, Nome = "Fiat", DataFundacao = new DateTime(1989, 06, 1), Logo = "fiat.jfif", Fundador = "Giovanni Agnelli", Nacionalidade = "Turim, Itália", },
                 new Equipas { IdEquipa = 2, Nome = "Audi", DataFundacao = new DateTime(1909, 06, 16), Logo = "audi.jpg", Fundador = "August Horch", Nacionalidade = "Ingolstadt, Alemanha" },
                 new Equipas { IdEquipa = 3, Nome = "Ford", DataFundacao = new DateTime(1903, 06, 16), Logo = "ford.jpg", Fundador = "Henry Ford", Nacionalidade = "Dearborn, Michigan, Estados Unidos" },
                 new Equipas { IdEquipa = 4, Nome = "Ferrari", DataFundacao = new DateTime(1939, 09, 13), Logo = "ferrari.jpg", Fundador = "Enzo Ferrari", Nacionalidade = "Maranello, Itália" },
                 new Equipas { IdEquipa = 5, Nome = "Citroën", DataFundacao = new DateTime(1919, 01, 1), Logo = "Citroën.jpg", Fundador = "André Citroën", Nacionalidade = "Paris, França" },
                 new Equipas { IdEquipa = 6, Nome = "Mitsubishi", DataFundacao = new DateTime(1870, 01, 1), Logo = "Mitsubishi.jpg", Fundador = "Yataro Iwasaki", Nacionalidade = "Tóquio, Japão" },
                 new Equipas { IdEquipa = 7, Nome = "Subaru", DataFundacao = new DateTime(1953, 05, 7), Logo = "Subaru.jpg", Fundador = "Kenji Kita Chikuhei Nakajima", Nacionalidade = "Ota,Gunma, Japão" },
-                new Equipas { IdEquipa = 8, Nome = "Mercedes", DataFundacao = new DateTime(1926, 01, 1), Logo = "Mercedes.jpg", Fundador = "Karl Benz", Nacionalidade = "Stuttgart, Alemanha" },
+                new Equipas { IdEquipa = 8, Nome = "Mercedes", DataFundacao = new DateTime(1926, 01, 1), Logo = "mercedes.jpg", Fundador = "Karl Benz", Nacionalidade = "Stuttgart, Alemanha" },
 
 
             };
@@ -47,9 +47,9 @@ namespace noticiasAuto.Migrations
                 new Pilotos { IdPiloto = 4, Nome = "Michael Schumacher", DataNascimento = new DateTime(1969, 01, 3), Categoria = "F1", Nacionalidade = "Alemã", Fotografia = "Schumacher.jpg", EquipaFK = 4 },
                 new Pilotos { IdPiloto = 5, Nome = "Sebastan Loeb", DataNascimento = new DateTime(1974, 02, 16), Categoria = "Rally", Nacionalidade = "Francesa", Fotografia = "Loeb.jpg", EquipaFK = 5 },
                 new Pilotos { IdPiloto = 6, Nome = "Armindo Araújo", DataNascimento = new DateTime(1974, 02, 26), Categoria = "Rally", Nacionalidade = "Portuguesa", Fotografia = "Araujo.jpg", EquipaFK = 6 },
-                new Pilotos { IdPiloto = 7, Nome = "Richard Burns", DataNascimento = new DateTime(1971, 01, 17), Categoria = "Rally", Nacionalidade = " Inglesa", Fotografia = "BurnsBurns.jpg", EquipaFK = 7 },
-                new Pilotos { IdPiloto = 7, Nome = "Lewis Hamilton", DataNascimento = new DateTime(1985, 01, 07), Categoria = "F1", Nacionalidade = "Inglesa", Fotografia = "LewisHamilton.jpg", EquipaFK = 8 },
-                new Pilotos { IdPiloto = 7, Nome = "Valtteri Bottas", DataNascimento = new DateTime(1989, 08, 28), Categoria = "F1", Nacionalidade = "Finlandesa", Fotografia = "Valtteri Bottas.jpg", EquipaFK = 8 },
+                new Pilotos { IdPiloto = 7, Nome = "Richard Burns", DataNascimento = new DateTime(1971, 01, 17), Categoria = "Rally", Nacionalidade = " Inglesa", Fotografia = "Burns.jpg", EquipaFK = 7 },
+                new Pilotos { IdPiloto = 7, Nome = "Lewis Hamilton", DataNascimento = new DateTime(1985, 01, 07), Categoria = "F1", Nacionalidade = "Inglesa", Fotografia = "Hamilton.jpg", EquipaFK = 8 },
+                new Pilotos { IdPiloto = 7, Nome = "Valtteri Bottas", DataNascimento = new DateTime(1989, 08, 28), Categoria = "F1", Nacionalidade = "Finlandesa", Fotografia = "ValtteriBottas.jpg", EquipaFK = 8 },
                 new Pilotos { IdPiloto = 7, Nome = "Sebastian Vettel", DataNascimento = new DateTime(1987, 07, 03), Categoria = "F1", Nacionalidade = "Alemã", Fotografia = "SebastianVettel.jpg", EquipaFK = 4 },
             };
 

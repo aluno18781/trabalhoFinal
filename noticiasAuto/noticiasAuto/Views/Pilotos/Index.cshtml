@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Equipa.Nome)
+            Equipa
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
@@ -44,7 +44,9 @@
             @Html.DisplayFor(modelItem => item.Nacionalidade)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fotografia)
+            <a href="~/imagens/@item.Fotografia" target="_blank">
+                <img src="~/imagens/@item.Fotografia" width="150" height="75" />
+            </a>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.IdPiloto }) |
