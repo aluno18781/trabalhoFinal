@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,13 +49,36 @@ namespace noticiasAuto.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPiloto,Nome,DataNascimento,Nacionalidade,Fotografia,EquipaFK")] Pilotos pilotos)
+        public ActionResult Create([Bind(Include = "IdPiloto,Nome,DataNascimento,Nacionalidade,Fotografia,EquipaFK")] Pilotos pilotos, string DataNascimento, HttpPostedFileBase fileUploadLogo)
         {
+            string nomeFoto = "Piloto" + DateTime.Now.ToString("_yyyyMMdd_hhmmss") + ".jpg";
+            string pathFoto = Path.Combine(Server.MapPath("~/Imagens/"), nomeFoto);
+
+            //caso chegue efectivamente um ficheiro ao servidor
+            if ((fileUploadLogo != null) && (fileUploadLogo.ContentType.ToString() == "image/jpeg"))
+            {
+                //guardar na BD
+                pilotos.Fotografia = nomeFoto;
+            }
+            else
+            {
+                // não há imagem...
+                ModelState.AddModelError("", "Não foi fornecida uma imagem ou o ficheiro inserido não é JPG...");
+                return View(pilotos);
+            }
+
+            DateTime dataNasci = DateTime.Parse(DataNascimento);
+            pilotos.DataNascimento = dataNasci;
+
             if (ModelState.IsValid)
             {
                 db.Pilotos.Add(pilotos);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                fileUploadLogo.SaveAs(pathFoto);
+
+                return RedirectToAction("Details", "Equipas", new { id = pilotos.EquipaFK });
+
             }
 
             ViewBag.EquipaFK = new SelectList(db.Equipas, "IdEquipa", "Nome", pilotos.EquipaFK);

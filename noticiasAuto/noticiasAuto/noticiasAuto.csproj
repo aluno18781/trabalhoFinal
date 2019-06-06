@@ -114,6 +114,7 @@
     <Content Include="Imagens\ferrari.jpg" />
     <Content Include="Imagens\fiat.jfif" />
     <Content Include="Imagens\ford.jpg" />
+    <Content Include="Imagens\Hamilton.jpg" />
     <Content Include="Imagens\Loeb.jpg" />
     <Content Include="Imagens\Marku.jpg" />
     <Content Include="Imagens\MarkuNoticia.jpg" />
@@ -126,6 +127,7 @@
     <Content Include="Imagens\Stig.jpg" />
     <Content Include="Imagens\StigBlomqvistNoticia.jpg" />
     <Content Include="Imagens\Subaru.jpg" />
+    <Content Include="Imagens\teste.jpg" />
     <Content Include="Imagens\ValtteriBottas.jpg" />
     <Content Include="Imagens\walter.jpg" />
     <Content Include="Scripts\bootstrap.js" />
