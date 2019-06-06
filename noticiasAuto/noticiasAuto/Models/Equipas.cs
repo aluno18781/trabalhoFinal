@@ -23,7 +23,7 @@ namespace noticiasAuto.Models
 
         public string Logo { get; set; }
 
-        public string Presidente { get; set; }
+        public string Fundador { get; set; }
 
         public string Nacionalidade { get; set; }
 

@@ -18,6 +18,8 @@ namespace noticiasAuto.Models
 
         public string Nacionalidade { get; set; }
 
+        public string Categoria { get; set; }
+
         public string Fotografia { get; set; }
 
         [ForeignKey("Equipa")]
