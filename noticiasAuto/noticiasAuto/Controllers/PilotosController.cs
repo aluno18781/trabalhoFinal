@@ -90,7 +90,8 @@ namespace noticiasAuto.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Equipas");
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Pilotos pilotos = db.Pilotos.Find(id);
             if (pilotos == null)
@@ -106,16 +107,52 @@ namespace noticiasAuto.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPiloto,Nome,DataNascimento,Nacionalidade,Fotografia,EquipaFK")] Pilotos pilotos)
+        public ActionResult Edit([Bind(Include = "idPiloto,EquipaFK,Nome,DataNascimento,Nacionalidade,Fotografia")] Pilotos pilotos, string DataNascimento, HttpPostedFileBase fileUploadLogo, string fileUploadLogoAntigo)
         {
+            ViewBag.EquipaFK = new SelectList(db.Equipas, "idEquipa", "Nome", pilotos.EquipaFK);
+
+            DateTime dataNasci = DateTime.Parse(DataNascimento);
+            pilotos.DataNascimento = dataNasci;
+
+
+            string nomeFotografia = "Piloto" + pilotos.IdPiloto + DateTime.Now.ToString("_yyyyMMdd_hhmmss") + ".jpg";
+            string oldName = fileUploadLogoAntigo;
+            string caminhoParaLogo = Path.Combine(Server.MapPath("~/Imagens/"), nomeFotografia);
+
+
+
+            //verificar se chega efetivamente um ficheiro ao servidor
+            if ((fileUploadLogo != null) && (fileUploadLogo.ContentType.ToString() == "image/jpeg"))
+            {
+                //guardar o nome da imagem na BD
+                pilotos.Fotografia = nomeFotografia;
+            }
+            else
+            {
+                pilotos.Fotografia = oldName;
+                // não há imagem...
+                ModelState.AddModelError("", "Não foi fornecida uma imagem ou o ficheiro inserido não é JPG...");
+
+                return View(pilotos);
+            }
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(pilotos).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            ViewBag.EquipaFK = new SelectList(db.Equipas, "IdEquipa", "Nome", pilotos.EquipaFK);
-            return View(pilotos);
+            if (fileUploadLogo != null)
+            {
+                //guardar o nome da imagem na BD
+                fileUploadLogo.SaveAs(caminhoParaLogo);
+                System.IO.File.Delete(Path.Combine(Server.MapPath("~/Imagens/"), oldName));
+            }
+
+
+
+            ViewBag.EquipaFK = new SelectList(db.Equipas, "idEquipa", "Nome", pilotos.EquipaFK);
+            return RedirectToAction("Details", "Equipas", new { id = pilotos.EquipaFK });
         }
 
         // GET: Pilotos/Delete/5
