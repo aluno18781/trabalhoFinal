@@ -4,47 +4,35 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>Noticias</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Utilizadores.Nome)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Utilizadores.Nome)
-        </dd>
+    <div>
+        <a href="~/imagens/@Model.Fotografia" target="_blank">
+            <img class="img-responsive" style="max-height:300px; margin:0 auto; " src="~/imagens/@Model.Fotografia" />
+        </a>
+    </div>
+    <br />
+    <h2 style="font-weight:bold">@Model.Titulo</h2>
+    <p style="font-size: 16px; text-align: justify;">@Model.Conteudo</p>
+    <br />
+    <p>Autor da notícia: @Model.Utilizadores.Nome</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fotografia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fotografia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Conteudo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Conteudo)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdNoticia }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<h4>Comentários:</h4>
+@foreach (var comentarios in Model.ListaDeComentarios)
+{
+        //ADICIONAR DATA DE COMENTARIO
+    <h6>@comentarios.Utilizador.Nome </h6>
+    <p>@comentarios.Conteudo</p>
+    <hr />
+
+}
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdNoticia }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
