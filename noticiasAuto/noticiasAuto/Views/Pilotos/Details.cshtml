@@ -4,22 +4,26 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
+<div class="alert alert-warning" role="alert">
+    <h1>Detalhes do Piloto:</h1> @Html.DisplayFor(model => model.Nome)
+</div>
 <div>
-    <h4>Pilotos</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Equipa.Nome)
+            Nome da Equipa:
+            @*Html.DisplayNameFor(model => model.Equipa.Nome)*@
         </dt>
 
         <dd>
+
             @Html.DisplayFor(model => model.Equipa.Nome)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            Nome do Piloto
+            @*Html.DisplayNameFor(model => model.Nome)*@
         </dt>
 
         <dd>
@@ -27,7 +31,8 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DataNascimento)
+            Data de Nascimento:
+            @*Html.DisplayNameFor(model => model.DataNascimento)*@
         </dt>
 
         <dd>
@@ -43,16 +48,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Fotografia)
+            Fotografia do Piloto:
+            @*Html.DisplayNameFor(model => model.Fotografia)*@
         </dt>
+        <br</br>
 
-        <a href="~/Imagens/@Model.Fotografia" target="_blank">
-            <img src="~/Imagens/@Model.Fotografia" height="75" />
+        <a href="~/Imagens/@Model.Fotografia" target="_parent">
+            <img src="~/Imagens/@Model.Fotografia" class="rounded" height="300" width="400" />
         </a>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPiloto }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar Piloto", "Edit", new { id = Model.IdPiloto }) |
+    @Html.ActionLink("Eliminar Piloto", "Delete", new { id = Model.IdPiloto }) |
+
+    @Html.ActionLink("´Voltar para Lista de Pilotos", "Index")
 </p>

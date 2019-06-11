@@ -4,11 +4,11 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<div class="alert alert-danger" role="alert" style='font-weight:bold;'>
+    Deseja mesmo eliminar o Piloto  @Html.DisplayFor(model => model.Nome)?
+</div>
 <div>
-    <h4>Pilotos</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -48,17 +48,47 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Fotografia)
+
+            <a href="~/Imagens/@Model.Fotografia" target="_blank">
+                <img src="~/Imagens/@Model.Fotografia" class="rounded" height="300" width="400" />
+            </a>
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
+    <script>
+        function macFunction(x) {
+            $("#item_view").modal();
+        };
+        $(document).ready(function () {
+            $("#success-alert").hide();
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+        });
+    </script>
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="javascript:return ConfirmMessageBox();" @Html.DisplayFor(model => model.Nome) ? />
             @Html.ActionLink("Back to List", "Index")
+
+
         </div>
     }
+
+    <script>
+        function ConfirmMessageBox() {
+            var result = confirm("Pretende mesmo eliminar o piloto @Html.DisplayFor(model => model.Nome)?");
+            if (result) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+/**/</script>
+
+
 </div>

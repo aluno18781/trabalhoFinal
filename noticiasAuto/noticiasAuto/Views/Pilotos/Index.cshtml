@@ -7,53 +7,56 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Equipa
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nacionalidade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fotografia)
-        </th>
-        <th></th>
-    </tr>
+    @Html.ActionLink("Criar Piloto", "Create")
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Equipa.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataNascimento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nacionalidade)
-        </td>
-        <td>
-            <a href="~/imagens/@item.Fotografia" target="_blank">
-                <img src="~/imagens/@item.Fotografia" width="150" height="75" />
-            </a>
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdPiloto }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdPiloto }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdPiloto })
-        </td>
-    </tr>
-}
+</p>
+<table class="table table-hover table-dark">
+    <thead class="thead-dark">
+        <tr>
+            @*<th>
+                    Equipa
+                </th>*@
+            <th>
+                Nome do Piloto
+            </th>
+
+            <th>
+                Nacionalidade do Piloto
+            </th>
+            <th>
+                Fotografia
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipa.Nome)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            @*
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataNascimento)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nacionalidade)
+            </td>
+            <td>
+                <a href="~/imagens/@item.Fotografia" target="_parent">
+                    <img src="~/imagens/@item.Fotografia" width="150" height="75" />
+                </a>
+            </td>
+            <td>
+                @*Html.ActionLink("Editar", "Edit", new { id = item.IdPiloto }) |*@
+                @Html.ActionLink("Detalhes Do Piloto", "Details", new { id = item.IdPiloto })
+                @*Html.ActionLink("Delete", "Delete", new { id = item.IdPiloto })*@
+            </td>
+        </tr>
+    }
 
 </table>
