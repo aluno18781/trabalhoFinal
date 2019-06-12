@@ -149,7 +149,13 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email,
+                    Email = model.Email,
+                    Nome = model.Nome ,
+                    DataNascimento = model.DataNascimento,
+                    Morada = model.Morada,
+                    CodPostal = model.CodPostal + " " + model.Localidade,
+                    Sexo = model.Sexo};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

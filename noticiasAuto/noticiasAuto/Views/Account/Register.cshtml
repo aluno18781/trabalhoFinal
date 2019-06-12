@@ -29,6 +29,57 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+
+    @*Adicionar os atributos especificos de um utilizador*@
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr />
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Morada, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Morada, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr />
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.CodPostal, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CodPostal, new { @class = "form-control" })
+            &nbsp;
+            @Html.TextBoxFor(m => m.Localidade, new { @class = "form-control" })
+
+        </div>
+    </div>
+    <hr />
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.DataNascimento, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr />
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Sexo, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Sexo, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr />
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IdentitySample.Models
@@ -79,6 +80,18 @@ namespace IdentitySample.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //ao adicionar atributos, vou aumentar os dados de um utilizador
+        [Required]
+        public string Nome { get; set; }
+        public string Morada { get; set; }
+        public string CodPostal { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string Localidade { get; set; }
+
+        [RegularExpression("[MmFf]")] //restringe os valores apenas a M F m f
+        [StringLength(1)]
+        public string Sexo { get; set; }
     }
 
     public class ResetPasswordViewModel
