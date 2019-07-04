@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using IdentitySample.Models;
 using noticiasAuto.Models;
 
 namespace noticiasAuto.Controllers
 {
     public class NoticiasController : Controller
     {
-        private NoticiasDB db = new NoticiasDB();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Noticias
         public ActionResult Index()
@@ -39,7 +40,7 @@ namespace noticiasAuto.Controllers
         // GET: Noticias/Create
         public ActionResult Create()
         {
-            ViewBag.UserFK = new SelectList(db.Utilizadores, "IdUser", "Nome");
+            ViewBag.UserFK = new SelectList(db.utilizadores, "IdUser", "Nome");
             return View();
         }
 
@@ -57,7 +58,7 @@ namespace noticiasAuto.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserFK = new SelectList(db.Utilizadores, "IdUser", "Nome", noticias.UserFK);
+            ViewBag.UserFK = new SelectList(db.utilizadores, "IdUser", "Nome", noticias.UserFK);
             return View(noticias);
         }
 
@@ -73,7 +74,7 @@ namespace noticiasAuto.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserFK = new SelectList(db.Utilizadores, "IdUser", "Nome", noticias.UserFK);
+            ViewBag.UserFK = new SelectList(db.utilizadores, "IdUser", "Nome", noticias.UserFK);
             return View(noticias);
         }
 
@@ -90,7 +91,7 @@ namespace noticiasAuto.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserFK = new SelectList(db.Utilizadores, "IdUser", "Nome", noticias.UserFK);
+            ViewBag.UserFK = new SelectList(db.utilizadores, "IdUser", "Nome", noticias.UserFK);
             return View(noticias);
         }
 

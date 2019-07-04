@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using noticiasAuto.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +13,8 @@ namespace IdentitySample.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //objeto representante da base dados
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -145,25 +148,30 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Include = "IdUser,Email,Nome")] utilizadores Utilizador, RegisterViewModel model)
         {
+            Utilizador.Email = model.Email;
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email,
-                    Email = model.Email,
-                    Nome = model.Nome ,
-                    DataNascimento = model.DataNascimento,
-                    Morada = model.Morada,
-                    CodPostal = model.CodPostal + " " + model.Localidade,
-                    Sexo = model.Sexo};
+
+                //adiconar o utilizador a BD
+                db.utilizadores.Add(Utilizador);
+                db.SaveChanges();
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //adicionar utilizador a role "Utilizadores"
+                    var RoleResult = await UserManager.AddToRoleAsync(user.Id, "UserComum");
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    //return View("DisplayEmail");
+                    return RedirectToAction("LogIn", "Account");
                 }
                 AddErrors(result);
             }

@@ -7,14 +7,14 @@ namespace noticiasAuto.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<noticiasAuto.Models.NoticiasDB>
+    internal sealed class Configuration : DbMigrationsConfiguration<noticiasAuto.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(noticiasAuto.Models.NoticiasDB context)
+        protected override void Seed(noticiasAuto.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -74,11 +74,18 @@ namespace noticiasAuto.Migrations
 
             };
 
-            utilizadores.ForEach(uu => context.Utilizadores.AddOrUpdate(u => u.Nome, uu));
+            utilizadores.ForEach(uu => context.utilizadores.AddOrUpdate(u => u.Nome, uu));
             context.SaveChanges();
 
-            
 
+            var user = new List<utilizadores> {
+                 new utilizadores {IdUser=1, Nome="Jornalista A", Email="a@aa.aaa"},
+                 new utilizadores {IdUser=2, Nome="Jornalista B", Email="b@bb.bbb"},
+                 new utilizadores {IdUser=3, Nome="Jornalista C", Email="c@cc.ccc"}
+            };
+
+            user.ForEach(uu => context.utilizadores.AddOrUpdate(u => u.Nome, uu));
+            context.SaveChanges();
 
 
             var noticias = new List<Noticias> {

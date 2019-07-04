@@ -6,18 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using IdentitySample.Models;
 using noticiasAuto.Models;
 
 namespace noticiasAuto.Controllers
 {
     public class utilizadoresController : Controller
     {
-        private NoticiasDB db = new NoticiasDB();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: utilizadores
         public ActionResult Index()
         {
-            return View(db.Utilizadores.ToList());
+            return View(db.utilizadores.ToList());
         }
 
         // GET: utilizadores/Details/5
@@ -27,7 +28,7 @@ namespace noticiasAuto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            utilizadores utilizadores = db.Utilizadores.Find(id);
+            utilizadores utilizadores = db.utilizadores.Find(id);
             if (utilizadores == null)
             {
                 return HttpNotFound();
@@ -50,7 +51,7 @@ namespace noticiasAuto.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Utilizadores.Add(utilizadores);
+                db.utilizadores.Add(utilizadores);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +66,7 @@ namespace noticiasAuto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            utilizadores utilizadores = db.Utilizadores.Find(id);
+            utilizadores utilizadores = db.utilizadores.Find(id);
             if (utilizadores == null)
             {
                 return HttpNotFound();
@@ -96,7 +97,7 @@ namespace noticiasAuto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            utilizadores utilizadores = db.Utilizadores.Find(id);
+            utilizadores utilizadores = db.utilizadores.Find(id);
             if (utilizadores == null)
             {
                 return HttpNotFound();
@@ -109,8 +110,8 @@ namespace noticiasAuto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            utilizadores utilizadores = db.Utilizadores.Find(id);
-            db.Utilizadores.Remove(utilizadores);
+            utilizadores utilizadores = db.utilizadores.Find(id);
+            db.utilizadores.Remove(utilizadores);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

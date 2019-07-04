@@ -7,13 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using IdentitySample.Models;
 using noticiasAuto.Models;
 
 namespace noticiasAuto.Controllers
 {
     public class EquipasController : Controller
     {
-        private NoticiasDB db = new NoticiasDB();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Equipas
         public ActionResult Index()

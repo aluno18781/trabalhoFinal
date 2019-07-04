@@ -1,4 +1,8 @@
-﻿using Owin;
+﻿using IdentitySample.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using noticiasAuto.Models;
+using Owin;
 
 namespace IdentitySample
 {
@@ -7,6 +11,109 @@ namespace IdentitySample
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            initApp();
+        }
+        private void initApp()
+        {
+
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var adminUser = new utilizadores();
+            var jornalistaUser = new utilizadores();
+            var userComum = new utilizadores();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+            // criar a Role 'Admin'
+            if (!roleManager.RoleExists("Admin"))
+            {
+                // não existe a 'role'
+                // então, criar essa role
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+            }
+
+            // criar a Role 'Jornalista'
+            if (!roleManager.RoleExists("Jornalista"))
+            {
+                // não existe a 'role'
+                // então, criar essa role
+                var role = new IdentityRole();
+                role.Name = "Jornalista";
+                roleManager.Create(role);
+            }
+
+            // criar a Role 'UserComum'
+            if (!roleManager.RoleExists("UserComum"))
+            {
+                // não existe a 'role'
+                // então, criar essa role
+                var role = new IdentityRole();
+                role.Name = "UserComum";
+                roleManager.Create(role);
+            }
+
+
+
+            // criar um utilizador 'Admin'
+            var admin = new ApplicationUser();
+            admin.UserName = "admin@mail.pt";
+            admin.Email = "admin@mail.pt";
+
+            string userPWD = "123_Asd";
+            var chkAdmin = userManager.Create(admin, userPWD);
+
+            adminUser.Nome = "Rodolfo Santos";
+            adminUser.Email = "admin@mail.pt";
+
+            db.utilizadores.Add(adminUser);
+
+            //Adicionar o Utilizador à respetiva Role-Agentes-
+            if (chkAdmin.Succeeded)
+            {
+                var result1 = userManager.AddToRole(admin.Id, "Admin");
+            }
+
+            // criar um utilizador 'Jornalista'
+            var jornalista = new ApplicationUser();
+            jornalista.UserName = "jornalista@mail.pt";
+            jornalista.Email = "jornalista@mail.pt";
+
+            string jornalistaPWD = "123_Asd";
+            var chkJornalista = userManager.Create(jornalista, jornalistaPWD);
+
+            jornalistaUser.Nome = "Futebol Hoje";
+            jornalistaUser.Email = "jornalista@mail.pt";
+
+            db.utilizadores.Add(jornalistaUser);
+
+            //Adicionar o Utilizador à respetiva Role-Agentes-
+            if (chkJornalista.Succeeded)
+            {
+                var result1 = userManager.AddToRole(jornalista.Id, "Jornalista");
+            }
+
+
+            // criar um utilizador 'Jornalista'
+            var utilizadorComum = new ApplicationUser();
+            utilizadorComum.UserName = "userComum@mail.pt";
+            utilizadorComum.Email = "userComum@mail.pt";
+
+            string userComumPWD = "123_Asd";
+            var chkUserComum = userManager.Create(utilizadorComum, userComumPWD);
+
+            userComum.Nome = "Utilizador Comum";
+            userComum.Email = "userComum@mail.pt";
+
+            db.utilizadores.Add(userComum);
+
+            //Adicionar o Utilizador à respetiva Role-Agentes-
+            if (chkJornalista.Succeeded)
+            {
+                var result1 = userManager.AddToRole(utilizadorComum.Id, "UserComum");
+            }
         }
     }
 }

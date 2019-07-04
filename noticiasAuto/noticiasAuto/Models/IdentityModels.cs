@@ -1,27 +1,16 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentitySample.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace IdentitySample.Models
+namespace noticiasAuto.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        //ao adicionar atributos, vou aumentar os dados de um utilizador
-        public string Nome { get; set; }
-        public string Morada { get; set; }
-        public string CodPostal { get; set; }
-        public DateTime DataNascimento { get; set; }
-
-        [RegularExpression("[MmFf]")] //restringe os valores apenas a M F m f
-        [StringLength(1)]
-        public String Sexo { get; set; }
-
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -33,8 +22,7 @@ namespace IdentitySample.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("ApplicationDbContext", throwIfV1Schema: false)
         {
         }
 
@@ -49,5 +37,36 @@ namespace IdentitySample.Models
         {
             return new ApplicationDbContext();
         }
+
+
+        public virtual DbSet<Equipas> Equipas
+        {
+            get; set;
+        }
+        public virtual DbSet<Pilotos> Pilotos
+        {
+            get; set;
+        }
+        public virtual DbSet<Noticias> Noticias
+        {
+            get; set;
+        }
+        public virtual DbSet<Comentarios> Comentarios
+        {
+            get; set;
+        }
+        public virtual DbSet<utilizadores> utilizadores
+        {
+            get; set;
+        }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+        }
+
     }
 }

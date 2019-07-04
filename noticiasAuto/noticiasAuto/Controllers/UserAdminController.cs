@@ -1,5 +1,6 @@
 ﻿using IdentitySample.Models;
 using Microsoft.AspNet.Identity.Owin;
+using noticiasAuto.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
