@@ -79,13 +79,13 @@ namespace noticiasAuto.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdUser,Nome,Email")] utilizadores utilizadores)
+        public ActionResult Edit([Bind(Include = "IdUser,Nome")] utilizadores utilizadores)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(utilizadores).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Noticias");
             }
             return View(utilizadores);
         }

@@ -35,21 +35,17 @@ namespace IdentitySample
                 roleManager.Create(role);
             }
 
-            // criar a Role 'Jornalista'
             if (!roleManager.RoleExists("Jornalista"))
             {
-                // não existe a 'role'
-                // então, criar essa role
+                
                 var role = new IdentityRole();
                 role.Name = "Jornalista";
                 roleManager.Create(role);
             }
 
-            // criar a Role 'UserComum'
             if (!roleManager.RoleExists("UserComum"))
             {
-                // não existe a 'role'
-                // então, criar essa role
+                
                 var role = new IdentityRole();
                 role.Name = "UserComum";
                 roleManager.Create(role);
@@ -59,18 +55,19 @@ namespace IdentitySample
 
             // criar um utilizador 'Admin'
             var admin = new ApplicationUser();
-            admin.UserName = "admin@mail.pt";
+            admin.UserName = "Admin";
             admin.Email = "admin@mail.pt";
 
             string userPWD = "123_Asd";
             var chkAdmin = userManager.Create(admin, userPWD);
 
-            adminUser.Nome = "Rodolfo Santos";
-            adminUser.Email = "admin@mail.pt";
+            adminUser.Nome = "Pedro Tapadas";
+            adminUser.Email = "pedro@mail.pt";
+
 
             db.utilizadores.Add(adminUser);
 
-            //Adicionar o Utilizador à respetiva Role-Agentes-
+            
             if (chkAdmin.Succeeded)
             {
                 var result1 = userManager.AddToRole(admin.Id, "Admin");
@@ -84,12 +81,12 @@ namespace IdentitySample
             string jornalistaPWD = "123_Asd";
             var chkJornalista = userManager.Create(jornalista, jornalistaPWD);
 
-            jornalistaUser.Nome = "Futebol Hoje";
+            jornalistaUser.Nome = "NoticiasAuto";
             jornalistaUser.Email = "jornalista@mail.pt";
 
             db.utilizadores.Add(jornalistaUser);
 
-            //Adicionar o Utilizador à respetiva Role-Agentes-
+              
             if (chkJornalista.Succeeded)
             {
                 var result1 = userManager.AddToRole(jornalista.Id, "Jornalista");
@@ -109,7 +106,7 @@ namespace IdentitySample
 
             db.utilizadores.Add(userComum);
 
-            //Adicionar o Utilizador à respetiva Role-Agentes-
+            
             if (chkJornalista.Succeeded)
             {
                 var result1 = userManager.AddToRole(utilizadorComum.Id, "UserComum");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using noticiasAuto.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,7 +22,6 @@ namespace IdentitySample.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
-        public bool RememberMe { get; set; }
     }
 
     public class VerifyCodeViewModel
@@ -36,8 +36,6 @@ namespace IdentitySample.Models
 
         [Display(Name = "Remember this browser?")]
         public bool RememberBrowser { get; set; }
-
-        public bool RememberMe { get; set; }
     }
 
     public class ForgotViewModel
@@ -71,27 +69,20 @@ namespace IdentitySample.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "A {0} tem de conter pelo menos {2} carateres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar password")]
+        [Compare("Password", ErrorMessage = "A password e a confirmação da password não correspondem.")]
         public string ConfirmPassword { get; set; }
 
-        //ao adicionar atributos, vou aumentar os dados de um utilizador
-        [Required]
-        public string Nome { get; set; }
-        public string Morada { get; set; }
-        public string CodPostal { get; set; }
-        public DateTime DataNascimento { get; set; }
-        public string Localidade { get; set; }
-
-        [RegularExpression("[MmFf]")] //restringe os valores apenas a M F m f
-        [StringLength(1)]
-        public string Sexo { get; set; }
+        public utilizadores Utilizador
+        {
+            get; set;
+        }
     }
 
     public class ResetPasswordViewModel
