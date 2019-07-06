@@ -23,13 +23,37 @@
 </div>
 
 
-<h4>Comentários:</h4>
-@foreach (var comentarios in Model.ListaDeComentarios)
-{
-        //ADICIONAR DATA DE COMENTARIO
-    <h6>@comentarios.Utilizador.Nome </h6>
-    <p>@comentarios.Conteudo</p>
-    <hr />
+<div style="clear: left">
+    <h3>Comentários:</h3>
+    @if (User.IsInRole("Admin") || User.IsInRole("Jornalista") || User.IsInRole("UserComum"))
+    {
+        <a href="@Url.Action("Create", "Comentarios", new { noticiaID = Model.IdNoticia})">Escreve um novo comentário... </a>
+    }
+    else
+    {
+        @Html.ActionLink("Faça Login ou Registe-se para escrever um comentário...", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    }@foreach (var comentarios in Model.ListaDeComentarios)
+    {
+        <hr />
+        <div style="float: right">
+
+            @if (User.Identity.Name.Equals(comentarios.Utilizador.Email))
+            {
+                <a href="@Url.Action("Edit", "Comentarios", new {id = comentarios.IdComentario, noticiaID = comentarios.NoticiaFK})">Editar</a>
+            }
+
+            @if (User.IsInRole("Admin") || User.Identity.Name.Equals(comentarios.Utilizador.Email))
+            {
+                <a href="@Url.Action("Delete", "Comentarios",new {id = comentarios.IdComentario})">Apagar</a>
+            }
+
+        </div>
+        <h4>@comentarios.Utilizador.Nome</h4>
+        <p>@comentarios.Conteudo</p>
+
+    }
+
+</div>
 
 }
     <p>

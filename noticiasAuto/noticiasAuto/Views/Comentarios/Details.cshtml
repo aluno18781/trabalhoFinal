@@ -1,0 +1,42 @@
+﻿@model noticiasAuto.Models.Comentarios
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Comentarios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Noticia.Fotografia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Noticia.Fotografia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Utilizador.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Utilizador.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Conteudo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Conteudo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdComentario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
