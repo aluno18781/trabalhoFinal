@@ -25,7 +25,6 @@ namespace noticiasAuto.Models
 
         public string Logo { get; set; }
 
-        [Display(Name = "Fundador da equipa")]
         public string Fundador { get; set; }
 
         public string Nacionalidade { get; set; }

@@ -1,4 +1,5 @@
-﻿using IdentitySample.Models;
+﻿using IdentitySample.Controllers;
+using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -8,11 +9,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IdentitySample.Controllers
+namespace noticiasAuto.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ManageController()
         {
         }
@@ -37,9 +39,20 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Account/Index
-        [HttpGet]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
+            var userIDList = db.utilizadores.Where(u => u.Email.Equals(User.Identity.Name));
+            var userID = 0;
+            foreach (var item in userIDList)
+            {
+                userID = item.IdUser;
+            }
+
+            Session["userID"] = userID;
+
+
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -49,21 +62,19 @@ namespace IdentitySample.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId()),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId()),
+                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
             return View(model);
         }
 
         //
         // GET: /Account/RemoveLogin
-        [HttpGet]
         public ActionResult RemoveLogin()
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
@@ -78,11 +89,10 @@ namespace IdentitySample.Controllers
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var userId = User.Identity.GetUserId();
-            var result = await UserManager.RemoveLoginAsync(userId, new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(userId);
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -98,7 +108,6 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Account/AddPhoneNumber
-        [HttpGet]
         public ActionResult AddPhoneNumber()
         {
             return View();
@@ -131,7 +140,6 @@ namespace IdentitySample.Controllers
         //
         // POST: /Manage/RememberBrowser
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult RememberBrowser()
         {
             var rememberBrowserIdentity = AuthenticationManager.CreateTwoFactorRememberBrowserIdentity(User.Identity.GetUserId());
@@ -142,7 +150,6 @@ namespace IdentitySample.Controllers
         //
         // POST: /Manage/ForgetBrowser
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult ForgetBrowser()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
@@ -152,12 +159,10 @@ namespace IdentitySample.Controllers
         //
         // POST: /Manage/EnableTFA
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTFA()
         {
-            var userId = User.Identity.GetUserId();
-            await UserManager.SetTwoFactorEnabledAsync(userId, true);
-            var user = await UserManager.FindByIdAsync(userId);
+            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
@@ -168,12 +173,10 @@ namespace IdentitySample.Controllers
         //
         // POST: /Manage/DisableTFA
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTFA()
         {
-            var userId = User.Identity.GetUserId();
-            await UserManager.SetTwoFactorEnabledAsync(userId, false);
-            var user = await UserManager.FindByIdAsync(userId);
+            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
@@ -183,7 +186,6 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Account/VerifyPhoneNumber
-        [HttpGet]
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             // This code allows you exercise the flow without actually sending codes
@@ -203,11 +205,10 @@ namespace IdentitySample.Controllers
             {
                 return View(model);
             }
-            var userId = User.Identity.GetUserId();
-            var result = await UserManager.ChangePhoneNumberAsync(userId, model.PhoneNumber, model.Code);
+            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(userId);
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -221,16 +222,14 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Account/RemovePhoneNumber
-        [HttpGet]
         public async Task<ActionResult> RemovePhoneNumber()
         {
-            var userId = User.Identity.GetUserId();
-            var result = await UserManager.SetPhoneNumberAsync(userId, null);
+            var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             }
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
@@ -240,7 +239,6 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        [HttpGet]
         public ActionResult ChangePassword()
         {
             return View();
@@ -256,11 +254,10 @@ namespace IdentitySample.Controllers
             {
                 return View(model);
             }
-            var userId = User.Identity.GetUserId();
-            var result = await UserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(userId);
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -273,7 +270,6 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Manage/SetPassword
-        [HttpGet]
         public ActionResult SetPassword()
         {
             return View();
@@ -287,11 +283,10 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
-                var result = await UserManager.AddPasswordAsync(userId, model.NewPassword);
+                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                 if (result.Succeeded)
                 {
-                    var user = await UserManager.FindByIdAsync(userId);
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                     if (user != null)
                     {
                         await SignInAsync(user, isPersistent: false);
@@ -313,13 +308,12 @@ namespace IdentitySample.Controllers
                 message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-            var userId = User.Identity.GetUserId();
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
                 return View("Error");
             }
-            var userLogins = await UserManager.GetLoginsAsync(userId);
+            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
             var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
@@ -343,13 +337,12 @@ namespace IdentitySample.Controllers
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var userId = User.Identity.GetUserId();
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, userId);
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
-            var result = await UserManager.AddLoginAsync(userId, loginInfo.Login);
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 

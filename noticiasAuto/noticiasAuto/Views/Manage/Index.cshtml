@@ -3,24 +3,25 @@
     ViewBag.Title = "Manage your account";
 }
 
-<h1>@ViewBag.Title</h1>
+<h1>A minha conta</h1>
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row">
-    <div class="col-md-8">
-        <p style="font-size:18px">
-            @if (Model.HasPassword)
-            {
-                <a class="btn btn-default" href="@Url.Action("ChangePassword","Manage")">Trocar de password</a>
-            }
-            else
-            {
-                @Html.ActionLink("Pick a password", "SetPassword")
-            }
-        </p>
-        <hr />
-        <div>
-            @Html.Action("Details", "Utilizadores", new { id = Session["userID"] })
-        </div>
 
+    <div class="row">
+        <div class="col-md-8">
+            <p style="font-size:18px">
+                @if (Model.HasPassword)
+                {
+                    <a class="btn btn-default" href="@Url.Action("ChangePassword","Manage")">Trocar de password</a>
+                }
+                else
+                {
+                    @Html.ActionLink("Pick a password", "SetPassword")
+                }
+            </p>
+            <hr />
+            <div>
+                @Html.Action("Details", "Utilizadores", new { id = Session["userID"] })
+            </div>
+
+        </div>
     </div>
-</div>

@@ -12,7 +12,6 @@ namespace noticiasAuto.Models
         [Key]
         public int IdComentario { get; set; }
 
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório!")]
         public string Conteudo { get; set; }
 
         [ForeignKey("Noticia")]
