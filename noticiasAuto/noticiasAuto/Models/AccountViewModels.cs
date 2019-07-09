@@ -57,7 +57,7 @@ namespace IdentitySample.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Lembrar-me?")]
         public bool RememberMe { get; set; }
     }
 
@@ -79,6 +79,7 @@ namespace IdentitySample.Models
         [Compare("Password", ErrorMessage = "A password e a confirmação da password não correspondem.")]
         public string ConfirmPassword { get; set; }
 
+        //para adicionar outro utilizador
         public utilizadores Utilizador
         {
             get; set;
@@ -99,7 +100,7 @@ namespace IdentitySample.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 

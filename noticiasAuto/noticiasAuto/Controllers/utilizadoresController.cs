@@ -26,7 +26,7 @@ namespace noticiasAuto.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Noticias");
             }
             utilizadores utilizadores = db.utilizadores.Find(id);
             if (utilizadores == null)

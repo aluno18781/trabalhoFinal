@@ -65,7 +65,7 @@ namespace noticiasAuto.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Noticias");
             }
             Equipas equipas = db.Equipas.Find(id);
             if (equipas == null)
@@ -80,15 +80,48 @@ namespace noticiasAuto.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdEquipa,Nome,DataFundacao,Logo,Fundador,Nacionalidade")] Equipas equipas)
+        public ActionResult Edit([Bind(Include = "IdEquipa,Nome,Presidente,Treinador,Nacionalidade,Cidade,Logo,DataFundacao")] Equipas equipa, HttpPostedFileBase fileUploadLogo, string DataFundacao)
         {
+
+            DateTime dataFund = DateTime.Parse(DataFundacao);
+            equipa.DataFundacao = dataFund;
+
+
+            string nomeLogo = "Equipa" + equipa.IdEquipa + DateTime.Now.ToString("_yyyyMMdd_hhmmss") + ".jpg";
+            string oldName = equipa.Logo;
+            string caminhoParaLogo = Path.Combine(Server.MapPath("~/Imagens/"), nomeLogo); //indica onde a imagem será guardada
+
+
+            //verificar se chega efetivamente um ficheiro ao servidor
+            if ((fileUploadLogo != null) && (fileUploadLogo.ContentType.ToString() == "image/jpeg"))
+            {
+                //guardar o nome da imagem na BD
+                equipa.Logo = nomeLogo;
+            }
+            else
+            {
+                //não há imagem
+                ModelState.AddModelError("", "Não foi fornecida uma imagem ou o ficheiro inserido não é JPG...");
+                return View(equipa); //reenvia os dados da 'Equipa' para a view
+            }
+
+
             if (ModelState.IsValid)
             {
-                db.Entry(equipas).State = EntityState.Modified;
+                //atualiza os dados da equipa, na estrutura de dados em memória
+                db.Entry(equipa).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (fileUploadLogo != null)
+                {
+                    //guardar o nome da imagem na BD
+                    fileUploadLogo.SaveAs(caminhoParaLogo);
+                    System.IO.File.Delete(Path.Combine(Server.MapPath("~/Imagens/"), oldName));
+                }
+
                 return RedirectToAction("Index");
             }
-            return View(equipas);
+            return View(equipa);
         }
 
         // GET: Equipas/Delete/5

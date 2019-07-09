@@ -50,6 +50,7 @@
                 </a>
                 @* procurar a nova imagem*@
                 <input type="file" name="uploadFoto" style="color:blue;" accept=".jpg" />
+                @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
 
             </div>
         </div>

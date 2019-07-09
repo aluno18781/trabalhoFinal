@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using noticiasAuto.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -77,11 +78,20 @@ namespace IdentitySample.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if (!String.IsNullOrEmpty(returnUrl))
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        //redireccionar para a view das notícias
+                        return RedirectToAction("Index", "Noticias");
+                    }
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -406,7 +416,7 @@ namespace IdentitySample.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Noticias");
         }
 
         //

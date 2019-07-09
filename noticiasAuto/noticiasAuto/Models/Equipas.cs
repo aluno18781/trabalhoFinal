@@ -17,13 +17,15 @@ namespace noticiasAuto.Models
         [Key]
         public int IdEquipa { get; set; }
 
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório!")] // o atributo 'Nome' é de preenchimento obrigatório
+        [Display(Name = "Nome da Equipa")]
         public string Nome { get; set; }
 
+        [Display(Name = "Data de Fundação")]
         public DateTime DataFundacao { get; set; }
 
         public string Logo { get; set; }
 
+        [Display(Name = "Fundador da equipa")]
         public string Fundador { get; set; }
 
         public string Nacionalidade { get; set; }

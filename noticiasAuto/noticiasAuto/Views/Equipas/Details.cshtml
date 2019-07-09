@@ -5,14 +5,26 @@
 }
 
 <div class="alert alert-warning" role="alert">
+    @if (User.IsInRole("Admin") || User.IsInRole("Jornalista"))
+    {
+    <p style="float: right">
+        @Html.ActionLink("Editar", "Edit", new {id = Model.IdEquipa})  |
+        @Html.ActionLink("Eliminar Equipa", "Delete", new { id = Model.IdEquipa })
+    </p>
+    }
     <h1>Detalhes da Equipa:</h1> @Html.DisplayFor(model => model.Nome)
 </div>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
-        z
 
+        <div>
+            <a href="~/Imagens/@Model.Logo" target="_parent">
+                <img src="~/Imagens/@Model.Logo" class="rounded" height="200" />
+            </a>
+        </div>
+        
         <dt>
             Nome da Equipa:
         </dt>
@@ -48,25 +60,13 @@
         </dd>
 
 
-        <dt>
-            Fotografia da Equipa:
-        </dt>
 
-        <dd>
-            <a href="~/Imagens/@Model.Logo" target="_parent">
-                <img src="~/Imagens/@Model.Logo" class="rounded" height="100" width="" />
-            </a>
-        </dd>
 
 
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Editar Piloto", "Edit", new { id = Model.IdEquipa }) |
-    @Html.ActionLink("Eliminar Equipa", "Delete", new { id = Model.IdEquipa }) |
-    @Html.ActionLink("Voltar para a lista de Equipas", "Index")
-</p>
+
 
 <div style="clear: left">
     <div class="alert alert-info" role="alert">
@@ -75,12 +75,41 @@
     </div>
     @foreach (var pilotos in Model.ListaDePilotos)
     {
-        <div class="col-lg-4" style=" text-align: center; padding-bottom:30px;">
-            <div>@pilotos.Nome</div>
-            <a href="@Url.Action("Details","Pilotos", new { id=pilotos.IdPiloto } )">
-                <img src="~/imagens/@pilotos.Fotografia" height="120" width="190" />
-            </a>
-        </div>
+<div class="col-sm-4" style="text-align: center; justify-content: center; padding-bottom:20px; ">
+    <div class="thumbnail" style="height:250px; width:350px;" onclick="window.location= '@Url.Action("Details","Pilotos", new { id = pilotos.IdPiloto})'">
+
+        <img src="~/imagens/@pilotos.Fotografia" alt="" class="image" style="align-content:center; height:240px; width:340px">
+
+        <h5 style="position: absolute; top: 200px; left: 15px; right:15px; ">
+            <p  style="color:white; background-color: dimgray; display:inline; "><strong> @pilotos.Nome</strong></p>
+        </h5>
+    </div>
+</div>
+
+    }
+</div>
+
+<br />
+
+
+<div style="float:left; clear:left; width:100%">
+    <div class="alert alert-info" role="alert">
+
+        <font style='font-weight:bold;'> Pilotos da Equipa @Html.DisplayFor(model => model.Nome)</font>
+    </div>
+
+    @foreach (var noticias in Model.ListaDeNoticias)
+    {
+<div class="col-sm-4" style="text-align: center; justify-content: center; padding-bottom:20px; ">
+    <div class="thumbnail" style="height:250px; width:350px;" onclick="window.location= '@Url.Action("Details","Noticias", new { id = noticias.IdNoticia})'">
+
+        <img src="~/imagens/@noticias.Fotografia" alt="" class="image" style="align-content:center; height:240px; width:340px">
+
+        <h5 style="position: absolute; top: 200px; left: 15px; right:15px; ">
+            <p style="color:white;  background-color: dimgray; display:inline; "><strong> @noticias.Titulo</strong></p>
+        </h5>
+    </div>
+</div>
 
     }
 </div>
