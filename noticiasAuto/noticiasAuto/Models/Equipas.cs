@@ -17,6 +17,7 @@ namespace noticiasAuto.Models
         [Key]
         public int IdEquipa { get; set; }
 
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório!")] // o atributo 'Nome' é de preenchimento obrigatório
         public string Nome { get; set; }
 
         public DateTime DataFundacao { get; set; }

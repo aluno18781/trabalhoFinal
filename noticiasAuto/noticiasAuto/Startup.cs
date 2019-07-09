@@ -55,14 +55,14 @@ namespace IdentitySample
 
             // criar um utilizador 'Admin'
             var admin = new ApplicationUser();
-            admin.UserName = "Admin";
-            admin.Email = "admin@mail.pt";
+            admin.UserName = "admin@ipt.pt";
+            admin.Email = "admin@ipt.pt";
 
             string userPWD = "123_Asd";
             var chkAdmin = userManager.Create(admin, userPWD);
 
             adminUser.Nome = "Pedro Tapadas";
-            adminUser.Email = "pedro@mail.pt";
+            adminUser.Email = "admin@ipt.pt";
 
 
             db.utilizadores.Add(adminUser);
@@ -75,41 +75,41 @@ namespace IdentitySample
 
             // criar um utilizador 'Jornalista'
             var jornalista = new ApplicationUser();
-            jornalista.UserName = "jornalista@mail.pt";
-            jornalista.Email = "jornalista@mail.pt";
+            jornalista.UserName = "jornalista@ipt.pt";
+            jornalista.Email = "jornalista@ipt.pt";
 
             string jornalistaPWD = "123_Asd";
             var chkJornalista = userManager.Create(jornalista, jornalistaPWD);
 
-            jornalistaUser.Nome = "NoticiasAuto";
-            jornalistaUser.Email = "jornalista@mail.pt";
+            jornalistaUser.Nome = "Jornalista";
+            jornalistaUser.Email = "jornalista@ipt.pt";
 
             db.utilizadores.Add(jornalistaUser);
 
               
             if (chkJornalista.Succeeded)
             {
-                var result1 = userManager.AddToRole(jornalista.Id, "Jornalista");
+                var result2 = userManager.AddToRole(jornalista.Id, "Jornalista");
             }
 
 
             // criar um utilizador 'Jornalista'
             var utilizadorComum = new ApplicationUser();
-            utilizadorComum.UserName = "userComum@mail.pt";
-            utilizadorComum.Email = "userComum@mail.pt";
+            utilizadorComum.UserName = "userComum@ipt.pt";
+            utilizadorComum.Email = "userComum@ipt.pt";
 
             string userComumPWD = "123_Asd";
             var chkUserComum = userManager.Create(utilizadorComum, userComumPWD);
 
             userComum.Nome = "Utilizador Comum";
-            userComum.Email = "userComum@mail.pt";
+            userComum.Email = "userComum@ipt.pt";
 
             db.utilizadores.Add(userComum);
 
             
             if (chkJornalista.Succeeded)
             {
-                var result1 = userManager.AddToRole(utilizadorComum.Id, "UserComum");
+                var result3 = userManager.AddToRole(utilizadorComum.Id, "UserComum");
             }
         }
     }

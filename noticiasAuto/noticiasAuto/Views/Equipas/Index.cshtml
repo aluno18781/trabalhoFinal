@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Criar Equipa", "Create")
 </p>
 
 
@@ -17,8 +17,9 @@
     <div class="col-sm-4" style="text-align:center; justify-content: center; padding-bottom:20px ">
         <div class="thumbnail" style="height:200px; width:300px;" onclick="window.location= '@Url.Action("Details","Equipas", new { id = item.IdEquipa})'">
             <img src="~/imagens/@item.Logo" alt="" style="align-content:center; height:200px; width:300px">
-            
-            
+
+
+
         </div>
     </div>
 }

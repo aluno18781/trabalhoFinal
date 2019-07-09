@@ -4,19 +4,18 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Apagar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem a certeza que pretende apagar este comentário?</h3>
 <div>
-    <h4>Comentarios</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Noticia.Fotografia)
+            <p>Título da Notícia</p>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Noticia.Fotografia)
+            @Html.DisplayFor(model => model.Noticia.Titulo)
         </dd>
 
         <dt>
@@ -28,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Conteudo)
+            <p>Comentário</p>
         </dt>
 
         <dd>
@@ -37,12 +36,14 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <a class="btn btn-default" href="@Url.Action("Index","Noticias")">Cancelar</a>
+            <input type="submit" value="Apagar" class="btn btn-danger" />
+
         </div>
     }
 </div>

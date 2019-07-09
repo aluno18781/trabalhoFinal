@@ -4,63 +4,88 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Editar Noticia</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Noticias", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Noticias</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdNoticia)
-
+        @Html.HiddenFor(model => model.Fotografia)
+      
         <div class="form-group">
-            @Html.LabelFor(model => model.Fotografia, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Fotografia, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fotografia, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Titulo, new
+                {
+                    @class = "form-control",
+                    maxLength = "500",
+                    @style = "resize:none; width:100%; max-width:700px; height:75px;"
+           })
+
+                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Fotografia, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                <a href="~/Imagens/@Model.Fotografia" target="_blank">
+                    <img src="~/Imagens/@Model.Fotografia" height="75" />
+                </a>
+                <input type="file" name="fileUploadLogo" style="color:blue; margin-top:1%" accept=".jpg" />
+                @Html.ValidationMessageFor(model => model.Fotografia, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Conteudo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Conteudo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Conteudo, new
+                {
+                    @class = "form-control",
+                    maxLength = "500",
+                    placeholder = "Escreva conteúdo da Notícia aqui...",
+                    @style = "resize:none; width:100%; max-width:700px; height:150px;"
+    })
+
                 @Html.ValidationMessageFor(model => model.Conteudo, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserFK, "UserFK", htmlAttributes: new { @class = "control-label col-md-2" })
+            <lbl class="control-label col-md-2" style="font-weight:bold">Equipas</lbl>
             <div class="col-md-10">
-                @Html.DropDownList("UserFK", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserFK, "", new { @class = "text-danger" })
+                @foreach (var item in ViewBag.equipasList)
+                {
+                    <span>@item.Nome</span>
+                    if (Model.ListaDeEquipas.Contains(item))
+                    {
+                        <input type="checkbox" name="equipaID" value="@item.IdEquipa" class="checkbox-inline" style="margin-right:10px;" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="equipaID" value="@item.IdEquipa" class="checkbox-inline" style="margin-right:10px;" />
+                    }
+                }
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Editar" class="btn btn-success" />
+                <a class="btn btn-danger" href="@Url.Action("Index","Noticias")">Cancelar</a>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

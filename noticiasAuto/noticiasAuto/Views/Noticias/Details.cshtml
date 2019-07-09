@@ -4,23 +4,26 @@
     ViewBag.Title = "Details";
 }
 
-
-
-<div>
-    <hr />
-
     <div>
-        <a href="~/imagens/@Model.Fotografia" target="_blank">
-            <img class="img-responsive" style="max-height:300px; margin:0 auto; " src="~/imagens/@Model.Fotografia" />
-        </a>
-    </div>
-    <br />
-    <h2 style="font-weight:bold">@Model.Titulo</h2>
-    <p style="font-size: 16px; text-align: justify;">@Model.Conteudo</p>
-    <br />
-    <p>Autor da notícia: @Model.Utilizadores.Nome</p>
+        <br />
+        @if (User.IsInRole("Admin") || User.Identity.Name.Equals(Model.Utilizadores.Email))
+        {
+            <p style="float:right">
+                @Html.ActionLink("Editar notícia", "Edit", new { id = Model.IdNoticia }) 
+            </p>
+        }
+            <div>
+                <a href="~/imagens/@Model.Fotografia" target="_blank">
+                    <img class="img-responsive" style="max-height:300px; margin:0 auto; " src="~/imagens/@Model.Fotografia" />
+                </a>
+            </div>
+            <br />
+            <h2 style="font-weight:bold">@Model.Titulo</h2>
+            <p style="font-size: 16px; text-align: justify;">@Model.Conteudo</p>
+            <br />
+            <p>Autor da notícia: @Model.Utilizadores.Nome</p>
 
-</div>
+        </div>
 
 
 <div style="clear: left">
@@ -55,8 +58,3 @@
 
 </div>
 
-}
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.IdNoticia }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>

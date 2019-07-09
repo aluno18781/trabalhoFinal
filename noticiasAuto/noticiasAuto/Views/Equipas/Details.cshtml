@@ -4,15 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="alert alert-warning" role="alert">
+    <h1>Detalhes da Equipa:</h1> @Html.DisplayFor(model => model.Nome)
+</div>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
-
+        z
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            Nome da Equipa:
         </dt>
 
         <dd>
@@ -20,7 +22,8 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DataFundacao)
+            Data de Fundação:
+
         </dt>
 
         <dd>
@@ -28,32 +31,48 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Logo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Logo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fundador)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fundador)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nacionalidade)
+            Sede:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Nacionalidade)
         </dd>
 
+
+        <dt>
+            Fundador da Equipa:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fundador)
+        </dd>
+
+
+        <dt>
+            Fotografia da Equipa:
+        </dt>
+
+        <dd>
+            <a href="~/Imagens/@Model.Logo" target="_parent">
+                <img src="~/Imagens/@Model.Logo" class="rounded" height="100" width="" />
+            </a>
+        </dd>
+
+
+
     </dl>
 </div>
+<p>
+    @Html.ActionLink("Editar Piloto", "Edit", new { id = Model.IdEquipa }) |
+    @Html.ActionLink("Eliminar Equipa", "Delete", new { id = Model.IdEquipa }) |
+    @Html.ActionLink("Voltar para a lista de Equipas", "Index")
+</p>
+
 <div style="clear: left">
+    <div class="alert alert-info" role="alert">
+
+        <font style='font-weight:bold;'> Pilotos da Equipa @Html.DisplayFor(model => model.Nome)</font>
+    </div>
     @foreach (var pilotos in Model.ListaDePilotos)
     {
         <div class="col-lg-4" style=" text-align: center; padding-bottom:30px;">
@@ -65,7 +84,4 @@
 
     }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdEquipa }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
