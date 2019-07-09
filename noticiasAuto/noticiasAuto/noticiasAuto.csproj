@@ -165,7 +165,6 @@
     <Content Include="Imagens\Burns.jpg" />
     <Content Include="Imagens\burnsNoticia.jpg" />
     <Content Include="Imagens\Citroën.jpg" />
-    <Content Include="Imagens\Equipa7_20190709_124950.jpg" />
     <Content Include="Imagens\ferrari.jpg" />
     <Content Include="Imagens\fiat.jfif" />
     <Content Include="Imagens\ford.jpg" />
@@ -175,15 +174,9 @@
     <Content Include="Imagens\MarkuNoticia.jpg" />
     <Content Include="Imagens\mercedes.jpg" />
     <Content Include="Imagens\Mitsubishi.jpg" />
-    <Content Include="Imagens\Noticia_7_20190708_070854.jpg" />
-    <Content Include="Imagens\Noticia_7_20190708_113140.jpg" />
-    <Content Include="Imagens\Piloto10_20190607_033844.jpg" />
-    <Content Include="Imagens\Piloto_20190607_121758.jpg" />
-    <Content Include="Imagens\Piloto_20190607_122011.jpg" />
     <Content Include="Imagens\schumacher.jpg" />
     <Content Include="Imagens\SCHUMACHERNoticia.jpg" />
     <Content Include="Imagens\SebastanNoticia.jpg" />
-    <Content Include="Imagens\SebastianVettel.jpg" />
     <Content Include="Imagens\Stig.jpg" />
     <Content Include="Imagens\StigBlomqvistNoticia.jpg" />
     <Content Include="Imagens\Subaru.jpg" />

@@ -178,7 +178,7 @@ namespace noticiasAuto.Controllers
             Pilotos pilotos = db.Pilotos.Find(id);
             db.Pilotos.Remove(pilotos);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Equipas", new { id = pilotos.EquipaFK });
         }
 
         protected override void Dispose(bool disposing)

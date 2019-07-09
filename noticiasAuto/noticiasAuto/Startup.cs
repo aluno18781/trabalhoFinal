@@ -61,7 +61,7 @@ namespace IdentitySample
             string userPWD = "123_Asd";
             var chkAdmin = userManager.Create(admin, userPWD);
 
-            adminUser.Nome = "Pedro Tapadas";
+            adminUser.Nome = "Administrador";
             adminUser.Email = "admin@ipt.pt";
 
 
